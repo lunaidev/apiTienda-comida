@@ -1,0 +1,39 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pdb
+
+# Virtual env
+venv/
+env/
+.Env/
+.venv/
+
+# Distribuciones
+build/
+dist/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+/staticfiles/
+/media/
+
+# Env
+.env
+.env.* 
+
+# OS
+Thumbs.db
+.DS_Store
+
+# GitHub
+*.egg
