@@ -65,7 +65,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     
     "http://127.0.0.1:5173",
-    "https://tienda-comidaapi.onrender.com",
+    "https://app-tienda-comida-vue.vercel.app/",
 
 ]
 ROOT_URLCONF = 'mi_proyecto.urls'
