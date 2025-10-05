@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,25 +132,38 @@ WSGI_APPLICATION = 'mi_proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if DEBUG:
+"""
+Base de datos: usar Postgres si las variables existen; de lo contrario, fallback a SQLite.
+Esto evita que el arranque en Render falle si no está configurado Postgres.
+"""
+
+db_name = config("DB_NAME", default="")
+db_user = config("DB_USER", default="")
+db_password = config("DB_PASSWORD", default="")
+db_host = config("DB_HOST", default="")
+db_port = config("DB_PORT", default="")
+
+use_postgres = all([db_name, db_user, db_password])
+
+if use_postgres:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': db_name,
+            'USER': db_user,
+            'PASSWORD': db_password,
+            'HOST': db_host or 'localhost',
+            'PORT': db_port or '5432',
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
         }
     }
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config("DB_NAME"),
-            'USER': config("DB_USER"),
-            'PASSWORD': config("DB_PASSWORD"),
-            'HOST': config("DB_HOST", default="localhost"),
-            'PORT': config("DB_PORT", default="5432"),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
