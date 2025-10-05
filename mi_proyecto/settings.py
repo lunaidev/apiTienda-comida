@@ -72,8 +72,11 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 ]
 
 # Configuraciones adicionales para CORS
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = False
+# Desactiva credenciales para simplificar CORS (no usamos cookies en login JWT)
+CORS_ALLOW_CREDENTIALS = False
+# Habilita temporalmente todos los orígenes para destrabar el preflight en producción
+# (luego se puede volver a la lista explícita de orígenes permitidos)
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Permitir headers específicos
 CORS_ALLOW_HEADERS = [
