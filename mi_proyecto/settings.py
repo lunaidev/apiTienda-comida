@@ -66,6 +66,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://tienda-comidaapi.onrender.com",
 ]
 
+# Permitir orígenes adicionales de Vercel (previews y subdominios)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*vercel\.app$",
+]
+
 # Configuraciones adicionales para CORS
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = False
