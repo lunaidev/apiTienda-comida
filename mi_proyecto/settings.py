@@ -134,8 +134,11 @@ WSGI_APPLICATION = 'mi_proyecto.wsgi.application'
 
 """
 Base de datos: usar Postgres si las variables existen; de lo contrario, fallback a SQLite.
-Esto evita que el arranque en Render falle si no está configurado Postgres.
+Se agrega `USE_SQLITE` como bandera para forzar SQLite desde variables de entorno,
+evitando fallos de arranque si Postgres no está disponible o está mal configurado.
 """
+
+USE_SQLITE = config("USE_SQLITE", default=False, cast=bool)
 
 db_name = config("DB_NAME", default="")
 db_user = config("DB_USER", default="")
@@ -143,7 +146,7 @@ db_password = config("DB_PASSWORD", default="")
 db_host = config("DB_HOST", default="")
 db_port = config("DB_PORT", default="")
 
-use_postgres = all([db_name, db_user, db_password])
+use_postgres = (not USE_SQLITE) and all([db_name, db_user, db_password])
 
 if use_postgres:
     DATABASES = {
