@@ -209,7 +209,7 @@ USE_TZ = True
 # Configuración de Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Sin autenticación por defecto; el nuevo servicio de login externo gestionará tokens.
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
